@@ -11,9 +11,11 @@
  */
 exports.idsEnumeration = (ids) => {
     try {
-        // ids formating
-        // formating
-        return [];
+        if (ids) {
+            return ids.trim().split(",").map(id => +id).filter(id => Number.isInteger(id));
+        } else {
+            return [];
+        }
     } catch (err) {
         throw err;
     }
@@ -26,12 +28,22 @@ exports.idsEnumeration = (ids) => {
  */
 exports.date = (date) => {
     try {
-        // date test
-        // formating
-        return {
-            start: false,
-            end: false
-        };
+        if (date) {
+            const [start, end] = date.split(',', 2).map(date => date.trim());
+            const regExp = new RegExp('^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$');
+
+            if ((!regExp.test(start)) || (!regExp.test(end) && end)) throw ({status: 400, message: 'Не верно введена дата'});
+
+            return {
+                start: start,
+                end: end ? end : false
+            }
+        } else {
+            return {
+                start: false,
+                end: false
+            };
+        }
     } catch (err) {
         throw err;
     }
@@ -40,13 +52,25 @@ exports.date = (date) => {
 /**
  * Checking the "Status" parameter of the request
  * @param {number} status - 1 or 0
- * @returns {boolean} - boolean value
+ * @param {string} name - status viewed name
+ * @returns {object} - object with properties allow (allow query by parameter) and status (parameter value)
  */
-exports.status = (status) => {
+exports.status = (status, name) => {
     try {
-        // status test
-        // formating
-        return false;
+        if (!name) throw new Error('When using this method, you must specify the status name');
+
+        if (status) {
+            if (status !== '0' && status !== '1') throw ({status: 400, message: `Для статуса ${name} разрешены только значения 0 и 1`});
+
+            return {
+                allow: true,
+                status: status === '1'
+            }
+        } else {
+            return {
+                allow: false
+            }
+        }
     } catch (err) {
         throw err;
     }

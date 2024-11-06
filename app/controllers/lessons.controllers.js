@@ -1,5 +1,5 @@
 const lessonsService = require("../services/lessons.serivce");
-const errorHandler = require("../services/error.service");
+const errorHandlers = require("../services/util/errorHandlers.service");
 
 /**
  * Request lessons by filter
@@ -21,6 +21,6 @@ exports.get = async (req, res) => {
 
         res.json(elements);
     } catch (error) {
-        errorHandler.express(error, res);
+        errorHandlers.express(error, res);
     }
 }
