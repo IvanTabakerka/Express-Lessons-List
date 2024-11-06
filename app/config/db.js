@@ -12,6 +12,6 @@ module.exports = {
         acquire: 3000,
         idle: 10000
     },
-    logging: console.log,
+    logging: false,
     force: false
 };
