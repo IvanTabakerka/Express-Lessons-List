@@ -1,6 +1,7 @@
-const dbConfig = require("../config/db")
+const dbConfig = require("../config/db");
 
-const Sequelize = require("sequelize")
+// Connection
+const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
     port: dbConfig.PORT,
@@ -13,13 +14,38 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
         acquire: dbConfig.pool.acquire,
         idle: dbConfig.pool.idle
     }
-})
+});
 
-const db = {}
+const db = {};
 
-db.Sequelize = Sequelize
-db.sequelize = sequelize
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
-db.lessons = require("./lessons.model")(sequelize, Sequelize)
+// Define models
+db.lessons = require("./lessons.model")(sequelize, Sequelize);
+db.lessonStudents = require("./lesson_students.model")(sequelize, Sequelize);
+db.lessonTeachers = require("./lesson_teachers.model")(sequelize, Sequelize);
+db.students = require("./students.model")(sequelize, Sequelize);
+db.teachers = require("./teachers.model")(sequelize, Sequelize);
 
-module.exports = db
+// Table relation
+
+// Lessons to students
+db.lessons.belongsToMany(db.students, {
+    through: {
+        model: db.lessonStudents
+    },
+    foreignKey: 'lesson_id',
+    otherKey: 'student_id'
+});
+
+// Lessons to teachers
+db.lessons.belongsToMany(db.teachers, {
+    through: {
+        model: db.lessonTeachers
+    },
+    foreignKey: 'lesson_id',
+    otherKey: 'teacher_id'
+});
+
+module.exports = db;
