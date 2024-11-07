@@ -1,6 +1,11 @@
 const lessonsService = require("../services/lessons.serivce");
 const errorHandlers = require("../services/util/errorHandlers.service");
 
+(async () => {
+    const els = await lessonsService.lessonsGet()
+    console.log(JSON.parse(JSON.stringify(els)));
+})();
+
 /**
  * Request lessons by filter
  * @param req - request data
@@ -11,10 +16,10 @@ exports.get = async (req, res) => {
     try {
         // Preparing parameters
 
-        throw ({
-            status: 400,
-            message: 'Test'
-        })
+        // throw ({
+        //     status: 400,
+        //     message: 'Test'
+        // })
 
         // Database Query
         const elements = await lessonsService.lessonsGet(req);
