@@ -4,6 +4,7 @@
 
 //TODO: На каждый метод можно сделать юнит тесты
 
+const config = require("../../config/config");
 /**
  * Transformation and validation of the id list from string to array
  * @param {string} ids - format "1,2,3,5"
@@ -78,48 +79,55 @@ exports.status = (status, name) => {
 
 /**
  * Checking for a range of numbers
- * @param range - Range of numbers in format "1,4" -> 1,2,3,4
+ * @param {string} range - Range of numbers in format "1,4" -> 1,2,3,4
  * @returns {object} - Object with start and end parameters (if not specified, will return false to end and start)
  */
 exports.numericRange = (range) => {
     try {
-        // status test
-        // formating
-        return {
-            start: false,
-            end: false
-        };
+        if (range) {
+            const [start, end] = range.split(',', 2).map(num => +num);
+
+            if ((isNaN(start) && start !== undefined) || (isNaN(end) && end !== undefined)) throw ({status: 400, message: 'Не верно введен диапазон чисел'});
+
+            return {
+                start: start,
+                end: end ? end : false
+            }
+        } else {
+            return {
+                start: false,
+                end: false
+            };
+        }
     } catch (err) {
         throw err;
     }
 }
 
 /**
- * Transforming page number to SQL offset
- * @param page - page number
- * @returns {number} - SQL offset
+ * Transforming page number to SQL offset and limits on the number of items per request
+ * @param page - Number of page
+ * @param itemsPerPage - Number of items requested
+ * @returns {object} - Limit and offset for SQL
  */
-exports.pageToOffset = (page) => {
+exports.paginator = (page, itemsPerPage) => {
     try {
-        // status test
-        // formating
-        return 0;
-    } catch (err) {
-        throw err;
-    }
-}
-
-
-/**
- * Limits on the number of items per request
- * @param count - Number of items requested
- * @returns {number} - Limit for SQL
- */
-exports.limiting = (count) => {
-    try {
-        // status test
-        // formating
-        return 0;
+        let res = {
+            limit: 5,
+            offset: 0
+        }
+        if (itemsPerPage) {
+            let limit = +itemsPerPage;
+            if (limit < 0 || !limit) throw ({status: 400, message: 'Количество элементов на странице должно быть числом больше нуля'});
+            if (limit > config.query.maxItemsPerRequest) throw ({status: 400, message: `За раз возможно запросить только ${config.query.maxItemsPerRequest}`});
+            res.limit = limit;
+        }
+        if (page) {
+            let offset = (+page-1)*res.limit;
+            if (offset < 0 || !offset) throw ({status: 400, message: 'Номер страницы должен быть числом больше нуля'});
+            res.offset = offset;
+        }
+        return res;
     } catch (err) {
         throw err;
     }
