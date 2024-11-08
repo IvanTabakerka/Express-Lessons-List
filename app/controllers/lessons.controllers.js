@@ -1,10 +1,6 @@
 const lessonsService = require("../services/lessons.serivce");
+const queryChecker = require("../services/util/queryChecker.service");
 const errorHandlers = require("../services/util/errorHandlers.service");
-
-(async () => {
-    const els = await lessonsService.lessonsGet()
-    console.log(JSON.parse(JSON.stringify(els)));
-})();
 
 /**
  * Request lessons by filter
@@ -15,16 +11,13 @@ const errorHandlers = require("../services/util/errorHandlers.service");
 exports.get = async (req, res) => {
     try {
         // Preparing parameters
-
-        // throw ({
-        //     status: 400,
-        //     message: 'Test'
-        // })
-
+        const date= queryChecker.date(req.query.date);
+        const status= queryChecker.status(req.query.status);
+        const teacherIds = queryChecker.idsEnumeration(req.query.teacherIds);
+        const studentsCount = queryChecker.numericRange(req.query.studentsCount);
+        const {limit, offset} = queryChecker.paginator(req.query.page, req.query.lessonsPerPage);
         // Database Query
-        const elements = await lessonsService.lessonsGet(req);
-
-        res.json(elements);
+        res.json(await lessonsService.lessonsGet(date, status, teacherIds, studentsCount, limit, offset));
     } catch (error) {
         errorHandlers.express(error, res);
     }
