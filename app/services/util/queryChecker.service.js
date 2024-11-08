@@ -1,21 +1,20 @@
 /**
  * File with standard checks for query parameters.
  */
-
-//TODO: На каждый метод можно сделать юнит тесты
-
 const config = require("../../config/config");
+
 /**
  * Transformation and validation of the id list from string to array
  * @param {string} ids - format "1,2,3,5"
- * @returns {array} - checked IDs array [1,2,3,5]
+ * @returns {array || false} - checked IDs array [1,2,3,5]
  */
 exports.idsEnumeration = (ids) => {
     try {
         if (ids) {
-            return ids.trim().split(",").map(id => +id).filter(id => Number.isInteger(id));
+            const res = ids.trim().split(",").map(id => +id).filter(id => Number.isInteger(id) && id !== 0);
+            return res.length > 0 ? res : false;
         } else {
-            return [];
+            return false;
         }
     } catch (err) {
         throw err;
@@ -56,16 +55,14 @@ exports.date = (date) => {
  * @param {string} name - status viewed name
  * @returns {object} - object with properties allow (allow query by parameter) and status (parameter value)
  */
-exports.status = (status, name) => {
+exports.status = (status) => {
     try {
-        if (!name) throw new Error('When using this method, you must specify the status name');
-
         if (status) {
-            if (status !== '0' && status !== '1') throw ({status: 400, message: `Для статуса ${name} разрешены только значения 0 и 1`});
+            if (status !== '0' && status !== '1') throw ({status: 400, message: `Для статуса разрешены только значения 0 и 1`});
 
             return {
                 allow: true,
-                status: status === '1'
+                value: status === '1'
             }
         } else {
             return {
@@ -116,19 +113,23 @@ exports.paginator = (page, itemsPerPage) => {
             limit: 5,
             offset: 0
         }
-        if (itemsPerPage) {
-            let limit = +itemsPerPage;
-            if (limit < 0 || !limit) throw ({status: 400, message: 'Количество элементов на странице должно быть числом больше нуля'});
-            if (limit > config.query.maxItemsPerRequest) throw ({status: 400, message: `За раз возможно запросить только ${config.query.maxItemsPerRequest}`});
-            res.limit = limit;
+
+        if (itemsPerPage || itemsPerPage === 0) {
+            if (!+itemsPerPage || +itemsPerPage < 1) throw ({status: 400, message: 'Количество элементов на странице должно быть числом больше нуля'});
+            res.limit = +itemsPerPage;
         }
-        if (page) {
+        if (page || page === 0) {
+            if (!+page || +page < 1) throw ({status: 400, message: 'Номер страницы должен быть числом больше нуля'});
+            if (itemsPerPage > config.query.maxItemsPerRequest) throw ({status: 400, message: `За раз возможно запросить только ${config.query.maxItemsPerRequest}`});
             let offset = (+page-1)*res.limit;
-            if (offset < 0 || !offset) throw ({status: 400, message: 'Номер страницы должен быть числом больше нуля'});
             res.offset = offset;
         }
         return res;
     } catch (err) {
         throw err;
     }
+}
+
+exports.sum = (a,b) => {
+    return a + b;
 }
