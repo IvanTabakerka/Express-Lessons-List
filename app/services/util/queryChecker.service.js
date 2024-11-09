@@ -114,13 +114,14 @@ exports.paginator = (page, itemsPerPage) => {
             offset: 0
         }
 
+        if (itemsPerPage > config.query.maxItemsPerRequest) throw ({status: 400, message: `За раз возможно запросить только ${config.query.maxItemsPerRequest}`});
+
         if (itemsPerPage || itemsPerPage === 0) {
             if (!+itemsPerPage || +itemsPerPage < 1) throw ({status: 400, message: 'Количество элементов на странице должно быть числом больше нуля'});
             res.limit = +itemsPerPage;
         }
         if (page || page === 0) {
             if (!+page || +page < 1) throw ({status: 400, message: 'Номер страницы должен быть числом больше нуля'});
-            if (itemsPerPage > config.query.maxItemsPerRequest) throw ({status: 400, message: `За раз возможно запросить только ${config.query.maxItemsPerRequest}`});
             let offset = (+page-1)*res.limit;
             res.offset = offset;
         }
