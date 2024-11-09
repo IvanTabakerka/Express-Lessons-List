@@ -35,7 +35,7 @@ exports.lessonsGet = async (date, status, teacherIds, studentsCount, limit, offs
         // Query joins
         queryOptions.include = includesCollector(teacherIds);
 
-        return await await db.lessons.findAll(queryOptions);
+        return await db.lessons.findAll(queryOptions);
     } catch (err) {
         throw err;
     }
