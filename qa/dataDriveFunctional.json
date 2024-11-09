@@ -1,0 +1,122 @@
+﻿[
+  {
+    "date": "",
+    "status": "",
+    "teacherIds": "",
+    "studentsCount": "",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "2019-09-02,2019-09-04",
+    "status": "",
+    "teacherIds": "",
+    "studentsCount": "",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "2019-09-04",
+    "status": "",
+    "teacherIds": "",
+    "studentsCount": "",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "2019-09-04,2343fe4,23r234",
+    "status": "",
+    "teacherIds": "",
+    "studentsCount": "",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "",
+    "status": "0",
+    "teacherIds": "",
+    "studentsCount": "",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "",
+    "status": "1",
+    "teacherIds": "",
+    "studentsCount": "",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "",
+    "status": "2",
+    "teacherIds": "",
+    "studentsCount": "",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "",
+    "status": "",
+    "teacherIds": "1,2,3",
+    "studentsCount": "",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "",
+    "status": "",
+    "teacherIds": "1",
+    "studentsCount": "",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "",
+    "status": "",
+    "teacherIds": "",
+    "studentsCount": "0,3",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "",
+    "status": "",
+    "teacherIds": "",
+    "studentsCount": "3",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "",
+    "status": "",
+    "teacherIds": "",
+    "studentsCount": "0",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "",
+    "status": "",
+    "teacherIds": "",
+    "studentsCount": "-1",
+    "page": "",
+    "lessonsPerPage": ""
+  },
+  {
+    "date": "",
+    "status": "",
+    "teacherIds": "",
+    "studentsCount": "",
+    "page": "2",
+    "lessonsPerPage": "8"
+  },
+  {
+    "date": "",
+    "status": "",
+    "teacherIds": "",
+    "studentsCount": "",
+    "page": "8",
+    "lessonsPerPage": "1"
+  }
+]

@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "7a410a3e-139f-4444-ae6d-2cfadb15faff",
+		"name": "functional",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13024839"
+	},
+	"item": [
+		{
+			"name": "lessons",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"date\", pm.iterationData.get(\"date\"))\r",
+							"pm.collectionVariables.set(\"status\", pm.iterationData.get(\"status\"))\r",
+							"pm.collectionVariables.set(\"teacherIds\", pm.iterationData.get(\"teacherIds\"))\r",
+							"pm.collectionVariables.set(\"studentsCount\", pm.iterationData.get(\"studentsCount\"))\r",
+							"pm.collectionVariables.set(\"page\", pm.iterationData.get(\"page\"))\r",
+							"pm.collectionVariables.set(\"lessonsPerPage\", pm.iterationData.get(\"lessonsPerPage\"))"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}lessons?date={{date}}&status={{status}}&teacherIds={{teacherIds}}&studentsCount={{studentsCount}}&page={{page}}&lessonsPerPage={{lessonsPerPage}}",
+					"host": [
+						"{{host}}lessons"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "{{date}}"
+						},
+						{
+							"key": "status",
+							"value": "{{status}}"
+						},
+						{
+							"key": "teacherIds",
+							"value": "{{teacherIds}}"
+						},
+						{
+							"key": "studentsCount",
+							"value": "{{studentsCount}}"
+						},
+						{
+							"key": "page",
+							"value": "{{page}}"
+						},
+						{
+							"key": "lessonsPerPage",
+							"value": "{{lessonsPerPage}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "date",
+			"value": ""
+		},
+		{
+			"key": "status",
+			"value": ""
+		},
+		{
+			"key": "teacherIds",
+			"value": ""
+		},
+		{
+			"key": "studentsCount",
+			"value": ""
+		},
+		{
+			"key": "page",
+			"value": ""
+		},
+		{
+			"key": "lessonsPerPage",
+			"value": ""
+		},
+		{
+			"value": ""
+		}
+	]
+}
