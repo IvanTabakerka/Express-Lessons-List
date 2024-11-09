@@ -6,7 +6,10 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
     port: dbConfig.PORT,
     dialect: dbConfig.dialect,
-    logging: dbConfig.logging ? console.log : false,
+    benchmark: dbConfig.logging,
+    logging: dbConfig.logging ? (msg, time) => {
+        console.log(`SQL Query: ${msg} - Time: ${time}ms`);
+    } : false,
     operatorsAliases: dbConfig.operatorsAliases,
     pool: {
         max: dbConfig.pool.max,
