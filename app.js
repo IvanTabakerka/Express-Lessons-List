@@ -24,10 +24,15 @@ app.listen(config.port, () => {
 
 const db = require("./app/models");
 const dbConfig = require("./app/config/db");
+const fakeData = require("./app/services/util/fakeData.service");
 
 db.sequelize.sync({ force: dbConfig.force }).then(() => {
-    console.info("База данных синхронизирована");
+    console.info("Database is running");
 }).catch((err) => {
     console.log(err)
-    console.error("Ошибка синхронизации базы данных: " + err.message);
+    console.error("Database error: " + err.message);
+}).finally(async () => {
+    await fakeData.generator()
 });
+
+
