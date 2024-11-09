@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         date: {
-            type: Sequelize.DATE,
+            type: Sequelize.DATEONLY,
             allowNull: false
         },
         title: {
@@ -20,6 +20,12 @@ module.exports = (sequelize, Sequelize) => {
             defaultValue: false
         }
     },{
+        indexes: [
+            {
+                fields: ['date'],
+                using: 'BTREE'
+            }
+        ],
         timestamps: false
     })
 }
